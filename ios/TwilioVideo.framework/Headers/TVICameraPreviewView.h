@@ -2,7 +2,7 @@
 //  TVICameraPreviewView.h
 //  TwilioVideo
 //
-//  Copyright © 2016 Twilio Inc. All rights reserved.
+//  Copyright © 2016-2017 Twilio, Inc. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
@@ -12,7 +12,7 @@
  *  `TVICameraPreviewView` previews video captured by `TVICameraCapturer`.
  *
  *  @discussion This view uses the special preview path offered by `AVCaptureVideoPreviewLayer`. It offers some benefits
- *  which are not provided by `TVIVideoViewRenderer` such as frame accurate mirroring, and support for UIViewContentMode.
+ *  which are not provided by `TVIVideoView` such as frame accurate mirroring, and support for UIViewContentMode.
  *  The supported content modes are: UIViewContentModeScaleToFill, UIViewContentModeScaleAspectFill, and UIViewContentModeScaleAspectFit.
  */
 @interface TVICameraPreviewView : UIView

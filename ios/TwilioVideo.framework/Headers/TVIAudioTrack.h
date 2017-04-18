@@ -2,7 +2,7 @@
 //  TVIAudioTrack.h
 //  TwilioVideo
 //
-//  Copyright © 2016 Twilio Inc. All rights reserved.
+//  Copyright © 2016-2017 Twilio, Inc. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -21,7 +21,7 @@
 
 @end
 
-@class TVIAudioConstraints;
+@class TVIAudioOptions;
 
 /**
  *  `TVILocalAudioTrack` represents an audio track where the content is captured from your device's audio subsystem.
@@ -29,9 +29,9 @@
 @interface TVILocalAudioTrack : TVIAudioTrack
 
 /**
- *  @brief The `TVIAudioConstraints` that were provided when the track was added to `TVILocalMedia`.
+ *  @brief The `TVIAudioOptions` that were provided when the track was added to `TVILocalMedia`.
  */
-@property (nonatomic, strong, readonly, nonnull) TVIAudioConstraints *constraints;
+@property (nonatomic, strong, readonly, nullable) TVIAudioOptions *options;
 
 /**
  *  @brief Indicates if the track content is enabled.
