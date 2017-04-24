@@ -10,8 +10,8 @@
 
 @interface TWVideoModule : RCTEventEmitter <RCTBridgeModule>
 
-@property (strong, nonatomic) UIView *previewView;
-@property (strong, nonatomic) UIView *remoteMediaView;
+@property (strong, nonatomic) TVIVideoView *previewView;
+@property (strong, nonatomic) TVIVideoView *remoteMediaView;
 
 
 //@property (nonatomic, copy) RCTBubblingEventBlock onConnect;

@@ -17,7 +17,7 @@ static NSString* cameraDidStart               = @"cameraDidStart";
 static NSString* cameraWasInterrumpted        = @"cameraWasInterrumpted";
 static NSString* cameraDidStopRunning         = @"cameraDidStopRunning";
 
-@interface TWVideoModule () <TVIParticipantDelegate, TVIRoomDelegate, TVIVideoTrackDelegate, TVICameraCapturerDelegate>
+@interface TWVideoModule () <TVIParticipantDelegate, TVIRoomDelegate, TVIVideoViewDelegate, TVICameraCapturerDelegate>
 
 @end
 
@@ -56,14 +56,14 @@ RCT_EXPORT_MODULE();
   self = [super init];
   if (self) {
 
-    UIView* remoteMediaView = [[UIView alloc] init];
+    TVIVideoView* remoteMediaView = [[TVIVideoView alloc] init];
     //remoteMediaView.backgroundColor = [UIColor blueColor];
 
     //remoteMediaView.translatesAutoresizingMaskIntoConstraints = NO;
     self.remoteMediaView = remoteMediaView;
 
 
-    UIView* previewView = [[UIView alloc] init];
+    TVIVideoView* previewView = [[TVIVideoView alloc] init];
     //previewView.backgroundColor = [UIColor yellowColor];
 
     //previewView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -85,7 +85,7 @@ RCT_EXPORT_MODULE();
       NSLog(@"Failed to add video track");
     } else {
       // Attach view to video track for local preview
-      [self.localVideoTrack attach:previewView];
+      [self.localVideoTrack addRenderer:previewView];
     }
 
 
@@ -149,25 +149,23 @@ RCT_EXPORT_METHOD(disconnect) {
 -(void)internalStartCallWithAccessToken:(NSString*)_accessToken roomName:(NSString*)_roomName{
 
   // Create a Video Client and connect to Twilio's backend.
-  self.videoClient = [TVIVideoClient clientWithToken:_accessToken];
+  // Does this show up?
+  //self.videoClient = [TVIVideoClient clientWithToken:_accessToken];
   //self.videoClient.delegate = self;
 
   // Join a room
-  TVIConnectOptions *connectOptions = [TVIConnectOptions optionsWithBlock:^(TVIConnectOptionsBuilder * _Nonnull builder) {
-
+  TVIConnectOptions *connectOptions = [TVIConnectOptions optionsWithToken: _accessToken block:^(TVIConnectOptionsBuilder * _Nonnull builder) {
     builder.localMedia = self.localMedia;
-    builder.name = _roomName;
-
+    builder.roomName = _roomName;
   }];
 
-  self.room  = [self.videoClient connectWithOptions:connectOptions delegate:self];
-
+  self.room = [TVIVideoClient connectWithOptions:connectOptions delegate: self];
 }
 
 - (void)cleanupRemoteParticipant {
   if (self.participant) {
     if ([self.participant.media.videoTracks count] > 0) {
-      [self.participant.media.videoTracks[0] detach:self.remoteMediaView];
+      [self.participant.media.videoTracks[0] removeRenderer: self.remoteMediaView];
     }
     self.participant = nil;
   }
@@ -272,7 +270,7 @@ RCT_EXPORT_METHOD(disconnect) {
   NSLog(@"Participant %@ added video track.", participant.identity);
 
   if (self.participant == participant) {
-    [videoTrack attach:self.remoteMediaView];
+    [videoTrack addRenderer: self.remoteMediaView];
   }
 
   [self sendEventWithName:participantAddedVideoTrack body:@{
@@ -284,7 +282,7 @@ RCT_EXPORT_METHOD(disconnect) {
   NSLog(@"Participant %@ removed video track.", participant.identity);
 
   if (self.participant == participant) {
-    [videoTrack detach:self.remoteMediaView];
+    [videoTrack removeRenderer: self.remoteMediaView];
   }
 
   [self sendEventWithName:participantRemovedAudioTrack body:@{

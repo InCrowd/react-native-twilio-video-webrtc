@@ -30,13 +30,11 @@ RCT_EXPORT_MODULE()
   UIView* view = [[UIView alloc] init];
   
   TWVideoModule* videoModule = [self.bridge moduleForName:@"TWVideoModule"];
-  
+
   if (videoModule) {
     [videoModule.previewView removeFromSuperview];
     [view addSubview:videoModule.previewView];
     [videoModule.previewView autoPinEdgesToSuperviewEdges];
-      
-      
   }
   
   return view;
