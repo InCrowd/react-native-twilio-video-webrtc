@@ -6,6 +6,8 @@
 build/
 DerivedData/
 
+ios/TwilioVideo.framework/
+
 ## Various settings
 *.pbxuser
 !default.pbxuser

@@ -65,6 +65,13 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		508A88451EC18A1100B9D39E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		58B511D21A9E6C8500147676 = {
 			isa = PBXGroup;
 			children = (
@@ -76,6 +83,7 @@
 				3D458EBF1DCE592E0044D480 /* TWVideoPreviewManager.h */,
 				3D458EC01DCE592E0044D480 /* TWVideoPreviewManager.m */,
 				134814211AA4EA7D00B7C361 /* Products */,
+				508A88451EC18A1100B9D39E /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
