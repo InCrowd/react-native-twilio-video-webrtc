@@ -204,6 +204,7 @@ RCT_EXPORT_METHOD(disconnect) {
   }];
 
   [self sendEventWithName:roomDidConnect body:@{@"roomName": room.name ?: @"",
+                                                @"sid": room.sid,
                                                 @"participantsNames": participantNames}];
 }
 
